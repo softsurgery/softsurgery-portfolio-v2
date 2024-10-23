@@ -1,22 +1,19 @@
-import { SidebarLeft } from "@/components/sidebar-left"
-import { SidebarRight } from "@/components/sidebar-right"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export default function Page() {
   return (
     <SidebarProvider>
-      <SidebarLeft />
       <SidebarInset>
         <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-white dark:bg-neutral-950">
           <div className="flex flex-1 items-center gap-2 px-3">
@@ -38,7 +35,6 @@ export default function Page() {
           <div className="mx-auto h-[100vh] w-full max-w-3xl rounded-xl bg-neutral-100/50 dark:bg-neutral-800/50" />
         </div>
       </SidebarInset>
-      <SidebarRight />
     </SidebarProvider>
-  )
+  );
 }
