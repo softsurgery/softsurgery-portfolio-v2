@@ -1,7 +1,8 @@
 import { sql } from '@vercel/postgres'
 import { db } from '@/lib/drizzle'
-import { UsersTable, User, NewUser } from './drizzle'
+import { UsersTable, User, NewUser, AppConfigTable, NewAppConfig, AppConfig } from './drizzle'
 
+// Data for seeding the users
 const newUsers: NewUser[] = [
   {
     name: 'Guillermo Rauch',
@@ -23,27 +24,64 @@ const newUsers: NewUser[] = [
   },
 ]
 
+// Data for seeding the app configuration
+const newAppConfig: NewAppConfig[] = [
+  {
+    title: 'siteTitle',
+    value: { en: 'My Awesome Site', es: 'Mi Sitio Asombroso' },
+  },
+  {
+    title: 'maintenanceMode',
+    value: { enabled: false },
+  },
+  {
+    title: 'contactEmail',
+    value: { email: 'contact@mysite.com' },
+  },
+]
+
+// Seed function to create tables and insert data
 export async function seed() {
-  // Create table with raw SQL
-  const createTable = await sql.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
-        image VARCHAR(255),
-        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-      );
+  // Step 1: Create the users table if it doesn't exist
+  const createUsersTable = await sql.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
+      image VARCHAR(255),
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
   `)
   console.log(`Created "users" table`)
 
+  // Step 2: Create the app_config table if it doesn't exist
+  const createAppConfigTable = await sql.query(`
+    CREATE TABLE IF NOT EXISTS app_config (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) UNIQUE NOT NULL,
+      value JSONB NOT NULL
+    );
+  `)
+  console.log(`Created "app_config" table`)
+
+  // Step 3: Insert the users into the users table
   const insertedUsers: User[] = await db
     .insert(UsersTable)
     .values(newUsers)
     .returning()
   console.log(`Seeded ${insertedUsers.length} users`)
 
+  // Step 4: Insert the app configuration into the app_config table
+  const insertedAppConfig: AppConfig[] = await db
+    .insert(AppConfigTable)
+    .values(newAppConfig)
+    .returning()
+  console.log(`Seeded ${insertedAppConfig.length} app configurations`)
+
   return {
-    createTable,
+    createUsersTable,
+    createAppConfigTable,
     insertedUsers,
+    insertedAppConfig,
   }
 }
