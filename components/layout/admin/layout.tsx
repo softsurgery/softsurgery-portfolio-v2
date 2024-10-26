@@ -117,7 +117,7 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="h-[100vh] w-full max-w-3xl rounded-xl bg-muted/50">
+          <div className="h-[100vh] w-full rounded-xl bg-muted/50">
             {children}
           </div>
         </div>
