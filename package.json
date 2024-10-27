@@ -27,6 +27,7 @@
     "@types/react-dom": "18.2.11",
     "@vercel/postgres": "^0.10.0",
     "autoprefixer": "10.4.16",
+    "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -46,5 +47,8 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2"
   }
 }

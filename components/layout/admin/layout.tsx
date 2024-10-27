@@ -7,13 +7,14 @@ import {
   ChevronRight,
   Home,
   Inbox,
-  Link,
+  Link as LinkIcon,
   MoreHorizontal,
   Paperclip,
   Plus,
   StarOff,
   TableOfContents,
   Trash2,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 
@@ -59,6 +60,10 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+
 const sidebarLeftData = {
   teams: [
     {
@@ -72,7 +77,6 @@ const sidebarLeftData = {
       title: "Home",
       url: "/admin/dashboard",
       icon: Home,
-      isActive: true,
     },
     {
       title: "Inbox",
@@ -84,6 +88,12 @@ const sidebarLeftData = {
       title: "Content Manager",
       url: "/admin/content-manager",
       icon: TableOfContents,
+      badge: "10",
+    },
+    {
+      title: "User Manager",
+      url: "/admin/user-manager",
+      icon: Users,
       badge: "10",
     },
   ],
@@ -187,7 +197,7 @@ function NavFavorites({
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link className="text-muted-foreground" />
+                  <LinkIcon className="text-muted-foreground" />
                   <span>Copy Link</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -221,18 +231,18 @@ function NavMain({
     title: string;
     url: string;
     icon: LucideIcon;
-    isActive?: boolean;
   }[];
 }) {
+  const pathname = usePathname();
   return (
     <SidebarMenu>
       {items.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={item.isActive}>
-            <a href={item.url}>
+          <SidebarMenuButton asChild isActive={pathname === item.url}>
+            <Link href={item.url}>
               <item.icon />
               <span>{item.title}</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       ))}
