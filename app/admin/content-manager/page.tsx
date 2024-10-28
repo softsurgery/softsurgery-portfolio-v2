@@ -1,6 +1,5 @@
 "use client";
 
-import Layout from "@/components/layout/admin/layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Page() {

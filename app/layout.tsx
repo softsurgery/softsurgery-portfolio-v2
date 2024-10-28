@@ -1,9 +1,9 @@
-import Layout from "@/components/layout/admin/layout";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { Application } from "@/components/common/Application";
 
 export const metadata = {
-  metadataBase: new URL("https://postgres-drizzle.vercel.app"),
+  metadataBase: new URL("https://softsurgery-portfolio-v2.vercel.app"),
   title: "Softsurgery Portfolio",
   description: "",
 };
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.variable}>
-        <Layout>{children}</Layout>
+        <Application>{children}</Application>
       </body>
     </html>
   );

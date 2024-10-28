@@ -31,3 +31,19 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+@layer base {
+  ::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-100 rounded-lg;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-200;
+
+  }
+}

@@ -61,8 +61,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const sidebarLeftData = {
   teams: [
@@ -102,37 +102,40 @@ const sidebarLeftData = {
   workspaces: [],
 };
 
-interface LayoutProps {
+interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function AdminLayout({ children }: AdminLayoutProps) {
+  const queryClient = new QueryClient();
   return (
-    <SidebarProvider>
-      <SidebarLeft />
-      <SidebarInset>
-        <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-white">
-          <div className="flex flex-1 items-center gap-2 px-3">
-            <SidebarTrigger />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1">
-                    Project Management & Task Tracking
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+    <QueryClientProvider client={queryClient}>
+      <SidebarProvider>
+        <SidebarLeft />
+        <SidebarInset>
+          <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-white">
+            <div className="flex flex-1 items-center gap-2 px-3">
+              <SidebarTrigger />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="line-clamp-1">
+                      Project Management & Task Tracking
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </div>
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4">
+            <div className="h-[100vh] w-full rounded-xl bg-muted/50">
+              {children}
+            </div>
           </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="h-[100vh] w-full rounded-xl bg-muted/50">
-            {children}
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </QueryClientProvider>
   );
 }
 
